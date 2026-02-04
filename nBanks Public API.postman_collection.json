@@ -1,0 +1,2951 @@
+{
+  "info": {
+    "_postman_id": "31d1c654-724d-403f-a6fb-e0a718d80413",
+    "name": "nBanks Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1379211"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "#1-GetDeviceCode",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let json = JSON.parse(responseBody);\r",
+                  "pm.collectionVariables.set(\"user_code\", json.user_code);\r",
+                  "pm.collectionVariables.set(\"device_code\", json.device_code);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "client_id",
+                  "value": "{{client_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{client_secret}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{loginBaseUrl}}/connect/deviceauthorization",
+              "host": [
+                "{{loginBaseUrl}}"
+              ],
+              "path": [
+                "connect",
+                "deviceauthorization"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "#2-GetToken",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let json = JSON.parse(responseBody);\r",
+                  "pm.environment.set(\"access_token\", json.access_token);\r",
+                  "pm.environment.set(\"refresh_token\", json.refresh_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "urn:ietf:params:oauth:grant-type:device_code",
+                  "type": "text"
+                },
+                {
+                  "key": "device_code",
+                  "value": "{{device_code}}",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "{{client_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{client_secret}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{loginBaseUrl}}/connect/token",
+              "host": [
+                "{{loginBaseUrl}}"
+              ],
+              "path": [
+                "connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "#3-RefreshToken",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let json = JSON.parse(responseBody);\r",
+                  "pm.environment.set(\"access_token\", json.access_token);\r",
+                  "pm.environment.set(\"refresh_token\", json.refresh_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "refresh_token",
+                  "type": "text"
+                },
+                {
+                  "key": "refresh_token",
+                  "value": "{{refresh_token}}",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "{{client_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{client_secret}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{loginBaseUrl}}/connect/token",
+              "host": [
+                "{{loginBaseUrl}}"
+              ],
+              "path": [
+                "connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "openid-configuration",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{loginBaseUrl}}/.well-known/openid-configuration",
+              "host": [
+                "{{loginBaseUrl}}"
+              ],
+              "path": [
+                ".well-known",
+                "openid-configuration"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user-info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{loginBaseUrl}}/connect/userinfo",
+              "host": [
+                "{{loginBaseUrl}}"
+              ],
+              "path": [
+                "connect",
+                "userinfo"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Organizations",
+      "item": [
+        {
+          "name": "Organizations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Organizations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Organizations"
+              ]
+            },
+            "description": "Get all organizations for the logged user"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"dolor id dolore pariatur occaecat\",\n   \"name\": \"tempor\",\n   \"vatNumber\": \"do eu anim eiusmod\",\n   \"hasPortfolio\": true\n  },\n  {\n   \"id\": \"nisi\",\n   \"name\": \"fugiat ullamco adipisicing\",\n   \"vatNumber\": \"fugiat\",\n   \"hasPortfolio\": false\n  }\n ],\n \"meta\": {}\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Financial",
+      "item": [
+        {
+          "name": "Wallets(ByUser)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Wallets"
+              ]
+            },
+            "description": "Get all wallets for the logged user"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"organization\": {\n    \"id\": \"eiusmod quis sint\",\n    \"name\": \"id tempor Excepteur ullamco\",\n    \"vatNumber\": \"in qui labore esse\",\n    \"hasPortfolio\": true\n   },\n   \"wallets\": [\n    {\n     \"id\": \"in\",\n     \"institutionName\": \"aliquip velit\",\n     \"institutionCountry\": \"voluptate\",\n     \"status\": \"veniam fugiat\",\n     \"totalAccounts\": -30539257,\n     \"lastRefresh\": \"2018-10-27T09:45:40.546Z\",\n     \"balancesByCurrencies\": [\n      {\n       \"currencyCode\": \"mollit ea reprehenderit\",\n       \"balance\": -70516878.4085569,\n       \"totalAccounts\": 42010110\n      },\n      {\n       \"currencyCode\": \"sed\",\n       \"balance\": 26200436.294706896,\n       \"totalAccounts\": 67575153\n      }\n     ],\n     \"accounts\": [\n      {\n       \"id\": \"occaecat ipsum\",\n       \"accountName\": \"veniam non elit\",\n       \"accountNumber\": \"tempor est sint veniam nostrud\",\n       \"lastRefresh\": \"1972-08-18T22:48:06.635Z\",\n       \"status\": \"ali\",\n       \"currencyCode\": \"laboris exercitation\",\n       \"balance\": -25074155.986543104\n      },\n      {\n       \"id\": \"pariatur eu nostrud labore cupidatat\",\n       \"accountName\": \"in in voluptate Ut\",\n       \"accountNumber\": \"do\",\n       \"lastRefresh\": \"1998-08-18T11:30:50.139Z\",\n       \"status\": \"nulla commodo\",\n       \"currencyCode\": \"non proident sunt\",\n       \"balance\": -55738142.66118764\n      }\n     ]\n    },\n    {\n     \"id\": \"nulla adipisicing\",\n     \"institutionName\": \"Duis non aliquip consectetur fugi\",\n     \"institutionCountry\": \"in elit quis id\",\n     \"status\": \"aliquip Ut\",\n     \"totalAccounts\": -86031880,\n     \"lastRefresh\": \"1985-09-03T15:23:37.631Z\",\n     \"balancesByCurrencies\": [\n      {\n       \"currencyCode\": \"incididunt labore\",\n       \"balance\": -47780973.194780916,\n       \"totalAccounts\": 35119602\n      },\n      {\n       \"currencyCode\": \"sunt\",\n       \"balance\": 46691613.13353288,\n       \"totalAccounts\": -71964236\n      }\n     ],\n     \"accounts\": [\n      {\n       \"id\": \"elit\",\n       \"accountName\": \"culpa fugiat\",\n       \"accountNumber\": \"nostrud ad incididunt\",\n       \"lastRefresh\": \"2017-06-30T06:50:31.608Z\",\n       \"status\": \"consectetur\",\n       \"currencyCode\": \"Lorem commodo anim consectetur\",\n       \"balance\": -79863153.20694883\n      },\n      {\n       \"id\": \"Excepteur ipsum dolore\",\n       \"accountName\": \"laborum\",\n       \"accountNumber\": \"aute\",\n       \"lastRefresh\": \"1992-11-27T15:47:04.949Z\",\n       \"status\": \"velit est amet nulla\",\n       \"currencyCode\": \"ullamco exercitation\",\n       \"balance\": -55883042.58001373\n      }\n     ]\n    }\n   ]\n  },\n  {\n   \"organization\": {\n    \"id\": \"ullamco voluptate eu nulla dolor\",\n    \"name\": \"eiusmod mollit\",\n    \"vatNumber\": \"veniam\",\n    \"hasPortfolio\": false\n   },\n   \"wallets\": [\n    {\n     \"id\": \"proident consectetur\",\n     \"institutionName\": \"ut id\",\n     \"institutionCountry\": \"consectetur dolor laborum pariatur\",\n     \"status\": \"in Ut ullamco ut\",\n     \"totalAccounts\": -43379758,\n     \"lastRefresh\": \"1970-04-10T06:07:19.005Z\",\n     \"balancesByCurrencies\": [\n      {\n       \"currencyCode\": \"sint qui consequat aliquip labore\",\n       \"balance\": 47809748.331374556,\n       \"totalAccounts\": 24215319\n      },\n      {\n       \"currencyCode\": \"ex\",\n       \"balance\": -2432515.5409825593,\n       \"totalAccounts\": -37229091\n      }\n     ],\n     \"accounts\": [\n      {\n       \"id\": \"dolore\",\n       \"accountName\": \"culpa aliquip proident\",\n       \"accountNumber\": \"aliquip cupidatat\",\n       \"lastRefresh\": \"1971-07-01T13:12:55.509Z\",\n       \"status\": \"officia in\",\n       \"currencyCode\": \"consectetur Lorem eiusmod\",\n       \"balance\": 39434558.83378881\n      },\n      {\n       \"id\": \"deserunt enim\",\n       \"accountName\": \"sint quis laboris in\",\n       \"accountNumber\": \"exercitation cupidatat proident\",\n       \"lastRefresh\": \"2016-07-10T03:38:56.621Z\",\n       \"status\": \"irure Excepteur consectetur ad\",\n       \"currencyCode\": \"sit in\",\n       \"balance\": -49182333.32993416\n      }\n     ]\n    },\n    {\n     \"id\": \"esse pariatur eiusmod\",\n     \"institutionName\": \"tempor\",\n     \"institutionCountry\": \"nostrud eu consectetur\",\n     \"status\": \"eu dolore do\",\n     \"totalAccounts\": -32150150,\n     \"lastRefresh\": \"1966-11-14T18:33:48.799Z\",\n     \"balancesByCurrencies\": [\n      {\n       \"currencyCode\": \"ut id proident est\",\n       \"balance\": -52141410.21738592,\n       \"totalAccounts\": 3441977\n      },\n      {\n       \"currencyCode\": \"cillum adipisicing sit ullamco\",\n       \"balance\": -90276800.57540444,\n       \"totalAccounts\": 36910758\n      }\n     ],\n     \"accounts\": [\n      {\n       \"id\": \"proident ea\",\n       \"accountName\": \"labore mollit elit\",\n       \"accountNumber\": \"laborum\",\n       \"lastRefresh\": \"1983-12-19T05:07:18.999Z\",\n       \"status\": \"sit eiusmod\",\n       \"currencyCode\": \"aliquip voluptate cupidatat exercitation\",\n       \"balance\": -27530014.662344456\n      },\n      {\n       \"id\": \"ut in\",\n       \"accountName\": \"adipisicing laborum non\",\n       \"accountNumber\": \"commodo in exercitation dolor\",\n       \"lastRefresh\": \"1975-02-13T08:33:02.795Z\",\n       \"status\": \"eu aliqua\",\n       \"currencyCode\": \"do ullamco velit dolor ea\",\n       \"balance\": 79351139.57802585\n      }\n     ]\n    }\n   ]\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Wallets(ByOrganization)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Organizations/:organizationId/Wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Organizations",
+                ":organizationId",
+                "Wallets"
+              ],
+              "variable": [
+                {
+                  "key": "organizationId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all wallets by organization id"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations/:organizationId/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations",
+                    ":organizationId",
+                    "Wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "organizationId"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"sed ex Duis\",\n   \"institutionName\": \"anim consequat do\",\n   \"institutionCountry\": \"officia\",\n   \"status\": \"eu\",\n   \"totalAccounts\": 21600443,\n   \"lastRefresh\": \"1992-07-09T06:23:24.545Z\",\n   \"balancesByCurrencies\": [\n    {\n     \"currencyCode\": \"non ad\",\n     \"balance\": -42976570.95789504,\n     \"totalAccounts\": -8619889\n    },\n    {\n     \"currencyCode\": \"ipsum proident ea voluptate esse\",\n     \"balance\": 11631023.690290302,\n     \"totalAccounts\": 84988384\n    }\n   ],\n   \"accounts\": [\n    {\n     \"id\": \"esse et id nisi eu\",\n     \"accountName\": \"irure qui esse incididunt\",\n     \"accountNumber\": \"ad dolor\",\n     \"lastRefresh\": \"1999-05-05T00:14:56.527Z\",\n     \"status\": \"fugiat eu veniam\",\n     \"currencyCode\": \"in aute est\",\n     \"balance\": 64338858.51429424\n    },\n    {\n     \"id\": \"velit sit sed elit\",\n     \"accountName\": \"aliquip tempor\",\n     \"accountNumber\": \"magna dolore\",\n     \"lastRefresh\": \"2019-09-06T07:16:31.043Z\",\n     \"status\": \"pariatur exercitation in ea dolor\",\n     \"currencyCode\": \"in\",\n     \"balance\": 97638807.5803397\n    }\n   ]\n  },\n  {\n   \"id\": \"dolore et ut\",\n   \"institutionName\": \"anim nisi consequat sint labore\",\n   \"institutionCountry\": \"adipisicing nulla ipsum est\",\n   \"status\": \"volup\",\n   \"totalAccounts\": -66616999,\n   \"lastRefresh\": \"1942-09-03T16:04:51.086Z\",\n   \"balancesByCurrencies\": [\n    {\n     \"currencyCode\": \"in\",\n     \"balance\": -84919624.22274143,\n     \"totalAccounts\": -4488001\n    },\n    {\n     \"currencyCode\": \"voluptate ullamco veniam id\",\n     \"balance\": -33584224.4001002,\n     \"totalAccounts\": 27198846\n    }\n   ],\n   \"accounts\": [\n    {\n     \"id\": \"enim aliqua\",\n     \"accountName\": \"commodo elit laborum\",\n     \"accountNumber\": \"reprehenderit sit in deser\",\n     \"lastRefresh\": \"1989-07-03T14:34:44.391Z\",\n     \"status\": \"adipisicing in\",\n     \"currencyCode\": \"sint et velit enim dolore\",\n     \"balance\": 72024672.73859674\n    },\n    {\n     \"id\": \"ut magna proident incididunt\",\n     \"accountName\": \"elit\",\n     \"accountNumber\": \"minim dolore culpa aliquip\",\n     \"lastRefresh\": \"1970-10-24T00:12:39.104Z\",\n     \"status\": \"incididunt ex\",\n     \"currencyCode\": \"eiusmod eu dolor quis sit\",\n     \"balance\": -32266723.272487223\n    }\n   ]\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations/:organizationId/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations",
+                    ":organizationId",
+                    "Wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "organizationId"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations/:organizationId/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations",
+                    ":organizationId",
+                    "Wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "organizationId"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Organizations/:organizationId/Wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Organizations",
+                    ":organizationId",
+                    "Wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "organizationId"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Wallets/:walletId/Accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Wallets",
+                ":walletId",
+                "Accounts"
+              ],
+              "variable": [
+                {
+                  "key": "walletId",
+                  "value": "33333333-3333-3333-3333-333333333333",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all accounts by wallet id"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets/:walletId/Accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets",
+                    ":walletId",
+                    "Accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"culpa esse in\",\n   \"accountName\": \"incididunt qui aute\",\n   \"accountNumber\": \"dolore ullamco\",\n   \"lastRefresh\": \"1975-08-01T11:14:52.798Z\",\n   \"status\": \"anim proident occaecat veniam\",\n   \"currencyCode\": \"enim consectetur labore minim\",\n   \"balance\": -99997640.31853645\n  },\n  {\n   \"id\": \"qui in dolor\",\n   \"accountName\": \"culpa\",\n   \"accountNumber\": \"nulla adipisicing aliquip\",\n   \"lastRefresh\": \"1966-09-02T11:01:52.658Z\",\n   \"status\": \"commodo consequat esse ad anim\",\n   \"currencyCode\": \"elit enim\",\n   \"balance\": -40593635.1918537\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets/:walletId/Accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets",
+                    ":walletId",
+                    "Accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets/:walletId/Accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets",
+                    ":walletId",
+                    "Accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Wallets/:walletId/Accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Wallets",
+                    ":walletId",
+                    "Accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Transactions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Accounts/:accountId/Transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Accounts",
+                ":accountId",
+                "Transactions"
+              ],
+              "query": [
+                {
+                  "key": "startAt",
+                  "value": "<dateTime>",
+                  "disabled": true
+                },
+                {
+                  "key": "endAt",
+                  "value": "<dateTime>",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "200",
+                  "disabled": true
+                },
+                {
+                  "key": "from_id",
+                  "value": "<guid>",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "accountId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all transaction by account id for filtered period"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Accounts/:accountId/Transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Accounts",
+                    ":accountId",
+                    "Transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Accounts/:accountId/Transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Accounts",
+                    ":accountId",
+                    "Transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"irure laboris est\",\n   \"date\": \"1942-12-18T16:28:07.562Z\",\n   \"description\": \"et ullamco\",\n   \"amount\": 63057962.63667908,\n   \"status\": \"adipisicing dolore Ut nostrud\",\n   \"currencyCode\": \"fugiat et\",\n   \"note\": \"eiusmod Exc\",\n   \"tag\": \"mollit velit\",\n   \"subcategory\": \"ut sunt\"\n  },\n  {\n   \"id\": \"quis Ut ullamco deserunt\",\n   \"date\": \"1995-11-21T00:31:48.145Z\",\n   \"description\": \"ea amet et ut laborum\",\n   \"amount\": -34621447.26252223,\n   \"status\": \"sint\",\n   \"currencyCode\": \"tempor\",\n   \"note\": \"incididunt aute nostrud ut\",\n   \"tag\": \"quis ea do\",\n   \"subcategory\": \"quis\"\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Accounts/:accountId/Transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Accounts",
+                    ":accountId",
+                    "Transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Accounts/:accountId/Transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Accounts",
+                    ":accountId",
+                    "Transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "TransactionsDocuments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transactions/:transactionId/documents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                ":transactionId",
+                "documents"
+              ],
+              "variable": [
+                {
+                  "key": "transactionId",
+                  "value": "00000000-0000-0000-0104-000000001040",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactions/:transactionId/documents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":transactionId",
+                    "documents"
+                  ],
+                  "variable": [
+                    {
+                      "key": "transactionId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"transactionDocumentId\": \"aliqua Excepteur eiusmod\",\n      \"name\": \"adipisicing in in\",\n      \"extension\": \"ut aliqua id culpa dolore\",\n      \"size\": 98720888,\n      \"content\": \"deserunt Excepteur\"\n    },\n    {\n      \"transactionDocumentId\": \"incididunt irure ea Excepteur deserunt\",\n      \"name\": \"ullamco elit nisi et officia\",\n      \"extension\": \"elit ut ex\",\n      \"size\": -43716165,\n      \"content\": \"do\"\n    }\n  ],\n  \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactions/:transactionId/documents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":transactionId",
+                    "documents"
+                  ],
+                  "variable": [
+                    {
+                      "key": "transactionId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"in ullamco dolor\",\n  \"message\": \"labore velit ut consectetur exercitation\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"id dolor qui\",\n      \"field\": \"nostrud ut Lorem ipsum\"\n    },\n    {\n      \"message\": \"officia\",\n      \"field\": \"ut ea mollit sed\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactions/:transactionId/documents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":transactionId",
+                    "documents"
+                  ],
+                  "variable": [
+                    {
+                      "key": "transactionId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"in ullamco dolor\",\n  \"message\": \"labore velit ut consectetur exercitation\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"id dolor qui\",\n      \"field\": \"nostrud ut Lorem ipsum\"\n    },\n    {\n      \"message\": \"officia\",\n      \"field\": \"ut ea mollit sed\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactions/:transactionId/documents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":transactionId",
+                    "documents"
+                  ],
+                  "variable": [
+                    {
+                      "key": "transactionId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"in ullamco dolor\",\n  \"message\": \"labore velit ut consectetur exercitation\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"id dolor qui\",\n      \"field\": \"nostrud ut Lorem ipsum\"\n    },\n    {\n      \"message\": \"officia\",\n      \"field\": \"ut ea mollit sed\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "TransactionsDocuments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transactiondocuments/:documentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transactiondocuments",
+                ":documentId"
+              ],
+              "variable": [
+                {
+                  "key": "documentId",
+                  "value": "73c7b79e-2bd1-4826-afdd-403668dd4747",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactiondocuments/:documentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactiondocuments",
+                    ":documentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "documentId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": {\n    \"transactionDocumentId\": \"proident Excepteur\",\n    \"name\": \"fugiat laboris\",\n    \"extension\": \"Lorem adipisicing minim\",\n    \"size\": -58977348,\n    \"content\": \"et reprehenderit commodo magna\"\n  },\n  \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactiondocuments/:documentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactiondocuments",
+                    ":documentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "documentId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"in ullamco dolor\",\n  \"message\": \"labore velit ut consectetur exercitation\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"id dolor qui\",\n      \"field\": \"nostrud ut Lorem ipsum\"\n    },\n    {\n      \"message\": \"officia\",\n      \"field\": \"ut ea mollit sed\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactiondocuments/:documentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactiondocuments",
+                    ":documentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "documentId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"in ullamco dolor\",\n  \"message\": \"labore velit ut consectetur exercitation\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"id dolor qui\",\n      \"field\": \"nostrud ut Lorem ipsum\"\n    },\n    {\n      \"message\": \"officia\",\n      \"field\": \"ut ea mollit sed\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/transactiondocuments/:documentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactiondocuments",
+                    ":documentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "documentId",
+                      "value": "minim ex",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"in ullamco dolor\",\n  \"message\": \"labore velit ut consectetur exercitation\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"id dolor qui\",\n      \"field\": \"nostrud ut Lorem ipsum\"\n    },\n    {\n      \"message\": \"officia\",\n      \"field\": \"ut ea mollit sed\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Reconciliation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"transactionId\": \"00000000-0000-0000-0104-000000001040\",\r\n  \"documentReference\": \"doc-1\",\r\n  \"description\": \"received\",\r\n  \"reconcilationDate\": \"2022-01-01T14:15:22Z\",\r\n  \"partial\": true,\r\n  \"reconciliationValue\": 10.00\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Reconciliations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Reconciliations"
+              ]
+            },
+            "description": "Confirm Bank Reconciliation for one transaction"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"sit officia mollit fugiat cillum\",\n \"message\": \"laboris consectetur cupidatat ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"culpa non\",\n   \"field\": \"deserunt eiusmod nisi est\"\n  },\n  {\n   \"message\": \"pariatur sit veniam\",\n   \"field\": \"commodo aute incididunt sed veniam\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": \"non in Ut\",\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"sit officia mollit fugiat cillum\",\n \"message\": \"laboris consectetur cupidatat ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"culpa non\",\n   \"field\": \"deserunt eiusmod nisi est\"\n  },\n  {\n   \"message\": \"pariatur sit veniam\",\n   \"field\": \"commodo aute incididunt sed veniam\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"sit officia mollit fugiat cillum\",\n \"message\": \"laboris consectetur cupidatat ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"culpa non\",\n   \"field\": \"deserunt eiusmod nisi est\"\n  },\n  {\n   \"message\": \"pariatur sit veniam\",\n   \"field\": \"commodo aute incididunt sed veniam\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Reconciliation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/Reconciliations/reconciliationId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Reconciliations",
+                "reconciliationId"
+              ],
+              "variable": [
+                {
+                  "key": "reconciliationId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Remove Reconciliation"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations/reconciliationId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations",
+                    "reconciliationId"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations/reconciliationId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations",
+                    "reconciliationId"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"sit officia mollit fugiat cillum\",\n \"message\": \"laboris consectetur cupidatat ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"culpa non\",\n   \"field\": \"deserunt eiusmod nisi est\"\n  },\n  {\n   \"message\": \"pariatur sit veniam\",\n   \"field\": \"commodo aute incididunt sed veniam\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations/reconciliationId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations",
+                    "reconciliationId"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"sit officia mollit fugiat cillum\",\n \"message\": \"laboris consectetur cupidatat ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"culpa non\",\n   \"field\": \"deserunt eiusmod nisi est\"\n  },\n  {\n   \"message\": \"pariatur sit veniam\",\n   \"field\": \"commodo aute incididunt sed veniam\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/Reconciliations/reconciliationId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Reconciliations",
+                    "reconciliationId"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"sit officia mollit fugiat cillum\",\n \"message\": \"laboris consectetur cupidatat ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"culpa non\",\n   \"field\": \"deserunt eiusmod nisi est\"\n  },\n  {\n   \"message\": \"pariatur sit veniam\",\n   \"field\": \"commodo aute incididunt sed veniam\"\n  }\n ]\n}"
+            }
+          ]
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clients",
+      "item": [
+        {
+          "name": "Clients",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clients?organizationId=99999999-9999-9999-9999-999999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "organizationId",
+                  "value": "99999999-9999-9999-9999-999999999999"
+                }
+              ]
+            },
+            "description": "Get clients from an organization"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients?organizationId=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationId",
+                      "value": "<guid>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"id aute\",\n   \"clientGroup\": \"do dolor\",\n   \"vatNumber\": \"sit ea elit consectetur\",\n   \"brand\": \"Duis\",\n   \"email\": \"Ut occaecat dolor ut pariatur\",\n   \"classification\": -41465206,\n   \"generateLeads\": false,\n   \"viewAccounts\": true\n  },\n  {\n   \"id\": \"mollit sit officia\",\n   \"clientGroup\": \"laboris\",\n   \"vatNumber\": \"mollit cupidatat nostrud id\",\n   \"brand\": \"esse minim\",\n   \"email\": \"sed in\",\n   \"classification\": -90636173,\n   \"generateLeads\": false,\n   \"viewAccounts\": false\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients?organizationId=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationId",
+                      "value": "<guid>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients?organizationId=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationId",
+                      "value": "<guid>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients?organizationId=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationId",
+                      "value": "<guid>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"anim dolor\",\n \"message\": \"ullamco s\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"reprehenderit quis nulla\",\n   \"field\": \"enim sunt\"\n  },\n  {\n   \"message\": \"adipisicing sit amet\",\n   \"field\": \"do amet proident\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Client Wallets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clients",
+                ":clientId",
+                "wallets"
+              ],
+              "variable": [
+                {
+                  "key": "clientId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all Wallets by client id"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"sunt minim adipisicing\",\n   \"institutionName\": \"sit nisi\",\n   \"institutionCountry\": \"ullamco ea anim nisi\",\n   \"status\": \"exercitation\",\n   \"totalAccounts\": -6317456,\n   \"lastRefresh\": \"2015-04-07T12:55:45.960Z\",\n   \"balancesByCurrencies\": [\n    {\n     \"currencyCode\": \"id in sit\",\n     \"balance\": 77042864.42818213,\n     \"totalAccounts\": 65073167\n    },\n    {\n     \"currencyCode\": \"enim in aliquip\",\n     \"balance\": 28578706.11007209,\n     \"totalAccounts\": -36233079\n    }\n   ],\n   \"accounts\": [\n    {\n     \"id\": \"eu id \",\n     \"accountName\": \"ipsum dolor in\",\n     \"accountNumber\": \"dolore\",\n     \"lastRefresh\": \"1956-02-26T05:43:21.663Z\",\n     \"status\": \"minim voluptate qui officia elit\",\n     \"currencyCode\": \"occaecat cillum\",\n     \"balance\": -41127056.61385472\n    },\n    {\n     \"id\": \"in la\",\n     \"accountName\": \"offici\",\n     \"accountNumber\": \"irure in Ut\",\n     \"lastRefresh\": \"2000-11-03T02:39:17.362Z\",\n     \"status\": \"labore sed\",\n     \"currencyCode\": \"labore eu\",\n     \"balance\": -31692941.781635538\n    }\n   ]\n  },\n  {\n   \"id\": \"aliqua eu laborum\",\n   \"institutionName\": \"eiusmod dolor\",\n   \"institutionCountry\": \"in do cillum\",\n   \"status\": \"dolor in ullamco aliquip pariatur\",\n   \"totalAccounts\": 96565904,\n   \"lastRefresh\": \"1953-06-03T16:56:28.752Z\",\n   \"balancesByCurrencies\": [\n    {\n     \"currencyCode\": \"laboris sint\",\n     \"balance\": 36868860.88265866,\n     \"totalAccounts\": 43406967\n    },\n    {\n     \"currencyCode\": \"dolore aliquip aliqua et\",\n     \"balance\": -30550896.687301636,\n     \"totalAccounts\": -14869096\n    }\n   ],\n   \"accounts\": [\n    {\n     \"id\": \"dolore laboris dolore\",\n     \"accountName\": \"ea dolore do ut\",\n     \"accountNumber\": \"dolor adipisicing amet sint incididunt\",\n     \"lastRefresh\": \"2007-07-15T11:12:52.376Z\",\n     \"status\": \"ipsum des\",\n     \"currencyCode\": \"sunt consequat ullamco magna nulla\",\n     \"balance\": -24781510.003735095\n    },\n    {\n     \"id\": \"amet reprehenderit incididunt\",\n     \"accountName\": \"sint\",\n     \"accountNumber\": \"commodo minim ullamco\",\n     \"lastRefresh\": \"1961-07-30T23:06:09.053Z\",\n     \"status\": \"cillum eiusmod\",\n     \"currencyCode\": \"aliqua sunt\",\n     \"balance\": -10522468.180664688\n    }\n   ]\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Client Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets/:walletId/accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clients",
+                ":clientId",
+                "wallets",
+                ":walletId",
+                "accounts"
+              ],
+              "variable": [
+                {
+                  "key": "clientId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "walletId",
+                  "value": "33333333-3333-3333-3333-333333333333",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all Accounts by Wallet id"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets/:walletId/accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets",
+                    ":walletId",
+                    "accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets/:walletId/accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets",
+                    ":walletId",
+                    "accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"\",\n   \"accountName\": \"dolor elit officia ut dolore\",\n   \"accountNumber\": \"fugiat\",\n   \"lastRefresh\": \"2006-10-26T15:15:34.520Z\",\n   \"status\": \"commodo minim irure\",\n   \"currencyCode\": \"consequat ullamco veniam aliquip dolor\",\n   \"balance\": -74994559.5217977\n  },\n  {\n   \"id\": \"ut\",\n   \"accountName\": \"fugiat nulla\",\n   \"accountNumber\": \"ea tempor\",\n   \"lastRefresh\": \"1965-11-04T13:38:39.376Z\",\n   \"status\": \"veniam nulla non\",\n   \"currencyCode\": \"nulla voluptate ut incididunt\",\n   \"balance\": 42189958.134236336\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets/:walletId/accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets",
+                    ":walletId",
+                    "accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/wallets/:walletId/accounts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "wallets",
+                    ":walletId",
+                    "accounts"
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "walletId"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Client Transactions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clients/:clientId/accounts/:accountId/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clients",
+                ":clientId",
+                "accounts",
+                ":accountId",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "startAt",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endAt",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "200",
+                  "disabled": true
+                },
+                {
+                  "key": "from_id",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "clientId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "accountId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all transaction by account id and client id for filtered period"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/accounts/:accountId/transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"data\": [\n  {\n   \"id\": \"pariatur ullamco Excepteur\",\n   \"date\": \"1968-06-13T03:03:12.406Z\",\n   \"description\": \"qui incididunt aliquip\",\n   \"amount\": 31354987.08409688,\n   \"status\": \"aliquip Lorem elit\",\n   \"currencyCode\": \"et adipisicing\",\n   \"note\": \"veniam incididunt ullamco\",\n   \"tag\": \"sint velit occaecat in ut\",\n   \"subcategory\": \"culpa\"\n  },\n  {\n   \"id\": \"nostrud voluptate nisi ut adipisicing\",\n   \"date\": \"2019-05-12T17:50:23.669Z\",\n   \"description\": \"officia minim\",\n   \"amount\": 72453251.0517157,\n   \"status\": \"in aliquip tempor\",\n   \"currencyCode\": \"officia ea\",\n   \"note\": \"nisi cupidatat\",\n   \"tag\": \"Excepteur non\",\n   \"subcategory\": \"officia ea\"\n  }\n ],\n \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/accounts/:accountId/transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/accounts/:accountId/transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/:clientId/accounts/:accountId/transactions?startAt=<dateTime>&endAt=<dateTime>&limit=200&from_id=<guid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    ":clientId",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "<guid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId"
+                    },
+                    {
+                      "key": "accountId"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n \"title\": \"ad fugiat in ut\",\n \"message\": \"nostrud ea consectetur dolor ex\",\n \"isDisplayable\": true,\n \"validationErrors\": [\n  {\n   \"message\": \"laboris dolore est\",\n   \"field\": \"voluptate\"\n  },\n  {\n   \"message\": \"reprehenderit veniam quis in\",\n   \"field\": \"id\"\n  }\n ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clients/accounts/:accountId/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "clients",
+                "accounts",
+                ":accountId",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "startAt",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endAt",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "from_id",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "accountId",
+                  "value": "99999999-9999-9999-9999-999999999999",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Get all transaction by account id for filtered period"
+          },
+          "response": [
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/accounts/:accountId/transactions?startAt=1981-06-21T16:20:48.550Z&endAt=1981-06-21T16:20:48.550Z&limit=200&from_id=ut reprehenderit in",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "ut reprehenderit in"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "in nisi et",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"elit\",\n      \"date\": \"1947-04-29T06:25:09.984Z\",\n      \"description\": \"veniam ut et tempor\",\n      \"amount\": 75099279.79529375,\n      \"accountBalance\": -78974227.96824531,\n      \"status\": \"tempor amet sint deserunt\",\n      \"currencyCode\": \"ullamco sit quis\",\n      \"note\": \"enim irure dolor eiusmod sed\",\n      \"tag\": \"est eu\",\n      \"subcategory\": \"deserunt\",\n      \"merchant\": {\n        \"name\": \"officia\",\n        \"vatNumber\": \"eu commodo sint\"\n      },\n      \"documentCount\": 10887377,\n      \"isDeleted\": false,\n      \"documentsIds\": [\n        \"nostrud\",\n        \"labore eu\"\n      ],\n      \"reconciliations\": [\n        {\n          \"id\": \"consequat ea\",\n          \"documentReference\": \"adipisicing Duis irure\",\n          \"description\": \"irure in\",\n          \"reconcilationDate\": \"2004-01-07T23:57:21.281Z\",\n          \"reconcilationSource\": \"dolore officia est\",\n          \"isParcial\": false,\n          \"value\": -98004132.96928796\n        },\n        {\n          \"id\": \"ullamco\",\n          \"documentReference\": \"cupidatat in\",\n          \"description\": \"commodo aliqua enim esse\",\n          \"reconcilationDate\": \"1991-11-05T00:16:02.225Z\",\n          \"reconcilationSource\": \"ad cillum\",\n          \"isParcial\": false,\n          \"value\": -99493186.92031035\n        }\n      ]\n    },\n    {\n      \"id\": \"aute consectetur aliqua incididunt Duis\",\n      \"date\": \"1997-05-23T14:32:52.239Z\",\n      \"description\": \"irure laboris\",\n      \"amount\": -91035099.49148148,\n      \"accountBalance\": 79918938.61456701,\n      \"status\": \"pariatur mollit\",\n      \"currencyCode\": \"magna do\",\n      \"note\": \"dolor cupidatat eu\",\n      \"tag\": \"fugiat velit\",\n      \"subcategory\": \"anim consectetur nisi incididunt\",\n      \"merchant\": {\n        \"name\": \"ea ad deser\",\n        \"vatNumber\": \"enim do sint aliquip se\"\n      },\n      \"documentCount\": -44237583,\n      \"isDeleted\": false,\n      \"documentsIds\": [\n        \"eiusmod\",\n        \"deserunt eius\"\n      ],\n      \"reconciliations\": [\n        {\n          \"id\": \"voluptate officia et eu qui\",\n          \"documentReference\": \"qui labore anim\",\n          \"description\": \"id\",\n          \"reconcilationDate\": \"1991-08-13T17:17:20.390Z\",\n          \"reconcilationSource\": \"ea dolor do cons\",\n          \"isParcial\": false,\n          \"value\": -12302086.652964532\n        },\n        {\n          \"id\": \"Excepteur qui sunt velit\",\n          \"documentReference\": \"cupidatat et dolor veniam\",\n          \"description\": \"aute reprehenderit sint ullamco\",\n          \"reconcilationDate\": \"1971-09-13T13:40:00.378Z\",\n          \"reconcilationSource\": \"occaecat nulla fugiat enim\",\n          \"isParcial\": false,\n          \"value\": 37120423.51709086\n        }\n      ]\n    }\n  ],\n  \"meta\": {}\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/accounts/:accountId/transactions?startAt=1981-06-21T16:20:48.550Z&endAt=1981-06-21T16:20:48.550Z&limit=200&from_id=ut reprehenderit in",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "ut reprehenderit in"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "in nisi et",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"aliqua est tempor occaecat\",\n  \"message\": \"culpa amet esse tempor laborum\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"laborum sint ex cupidatat sed\",\n      \"field\": \"cillum\"\n    },\n    {\n      \"message\": \"est eiusmod Duis\",\n      \"field\": \"fugiat ipsum nisi ea\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/accounts/:accountId/transactions?startAt=1981-06-21T16:20:48.550Z&endAt=1981-06-21T16:20:48.550Z&limit=200&from_id=ut reprehenderit in",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "ut reprehenderit in"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "in nisi et",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"aliqua est tempor occaecat\",\n  \"message\": \"culpa amet esse tempor laborum\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"laborum sint ex cupidatat sed\",\n      \"field\": \"cillum\"\n    },\n    {\n      \"message\": \"est eiusmod Duis\",\n      \"field\": \"fugiat ipsum nisi ea\"\n    }\n  ]\n}"
+            },
+            {
+              "name": "Untitled Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clients/accounts/:accountId/transactions?startAt=1981-06-21T16:20:48.550Z&endAt=1981-06-21T16:20:48.550Z&limit=200&from_id=ut reprehenderit in",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "clients",
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1981-06-21T16:20:48.550Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "from_id",
+                      "value": "ut reprehenderit in"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "in nisi et",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"title\": \"aliqua est tempor occaecat\",\n  \"message\": \"culpa amet esse tempor laborum\",\n  \"isDisplayable\": false,\n  \"validationErrors\": [\n    {\n      \"message\": \"laborum sint ex cupidatat sed\",\n      \"field\": \"cillum\"\n    },\n    {\n      \"message\": \"est eiusmod Duis\",\n      \"field\": \"fugiat ipsum nisi ea\"\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "user_code",
+      "value": ""
+    },
+    {
+      "key": "device_code",
+      "value": ""
+    }
+  ]
+}
